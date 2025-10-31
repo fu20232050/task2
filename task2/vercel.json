@@ -2,6 +2,6 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],
-  "buildCommand": "npm run build",  // 显式指定构建命令
-  "outputDirectory": "dist"         // 告诉Vercel打包产物目录
+  "buildCommand": "npm run build",  
+  "outputDirectory": "dist"         
 }
