@@ -5,6 +5,8 @@ import './assets/style.css'
 import App from './App.vue'
 import router from './router' 
 import 'nprogress/nprogress.css'
+import { inject } from '@vercel/analytics'
+inject()
 
 // 1. 创建 Pinia 实例
 const pinia = createPinia()
