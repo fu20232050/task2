@@ -7,18 +7,19 @@ import { storeToRefs } from 'pinia'
 const store = useMessageStore()
 const { message } = storeToRefs(store)
 
-// 注入 Vercel 分析工具
+// 注入 Vercel Analytics
 const injectAnalytics = () => {
   const script = document.createElement('script')
-  script.src = 'https://analytics.vercel.com/script.js' // 移除旧地址中的 v1 路径
-  script.dataset.project = import.meta.env.VERCEL_PROJECT_ID || ''
+  script.src = 'https://analytics.vercel.com/script.js'
+  script.dataset.project = 'prj_yaCaZ68eSEUvYr22Hs0DF9PvDRA3' // 填入你的项目ID
   document.head.appendChild(script)
 }
 
+// 注入 Vercel Speed Insights
 const injectSpeedInsights = () => {
   const script = document.createElement('script')
   script.src = 'https://speed-insights.vercel.app/v1/speed-insights.js'
-  script.dataset.project = import.meta.env.VERCEL_PROJECT_ID || ''
+  script.dataset.project = 'prj_yaCaZ68eSEUvYr22Hs0DF9PvDRA3' // 填入你的项目ID
   document.head.appendChild(script)
 }
 
@@ -31,7 +32,6 @@ onMounted(() => {
 <template>
   <div class="text-center font-sans text-gray-700 antialias">
     <header>
-      <!-- 闪信提示（使用 Tailwind 动画类） -->
       <div id="flashMessage" class="animate-fade py-2 px-4 mb-4" v-if="message">
         <h4>{{ message }}</h4>
       </div>
@@ -49,7 +49,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* 基础样式（保持与 Tailwind 兼容） */
 h2 {
   @apply text-lg;
 }
