@@ -4,13 +4,11 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-// 使用默认导入方式
-import { inject } from '@vercel/analytics'
-
-// 注入分析
-inject()
+// 尝试不同的导入方式
+import { Analytics } from '@vercel/analytics'
 
 const app = createApp(App)
+app.use(Analytics)  // 使用 use 方法
 app.use(createPinia())
 app.use(router)
 app.mount('#app')
