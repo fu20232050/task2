@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { onMounted } from 'vue' // 从 vue 中导入 onMounted
 import { useMessageStore } from '@/stores/message'
 import { storeToRefs } from 'pinia'
-import { SpeedInsights } from '@vercel/speed-insights/vue';
 
 const store = useMessageStore()
 const { message } = storeToRefs(store)
 
-// 新增：通过 script 标签手动注入 Vercel Analytics（绕过 Rollup 解析问题）
+// 注入 Vercel Analytics
 const injectAnalytics = () => {
   const script = document.createElement('script')
   script.src = 'https://analytics.vercel.com/v1/script.js'
@@ -15,12 +15,21 @@ const injectAnalytics = () => {
   document.head.appendChild(script)
 }
 
-// 确保在组件挂载后执行注入
-onMounted(injectAnalytics)
+// 注入 Vercel Speed Insights
+const injectSpeedInsights = () => {
+  const script = document.createElement('script')
+  script.src = 'https://speed-insights.vercel.app/v1/speed-insights.js'
+  script.dataset.project = import.meta.env.VERCEL_PROJECT_ID || ''
+  document.head.appendChild(script)
+}
+
+onMounted(() => {
+  injectAnalytics()
+  injectSpeedInsights()
+})
 </script>
 
 <template>
-  <SpeedInsights />
   <div class="text-center font-sans text-gray-700 antialias">
     <header>
       <div id="flashMessage" class="animate-fade" v-if="message">
