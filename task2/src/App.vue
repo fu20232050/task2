@@ -10,7 +10,7 @@ const { message } = storeToRefs(store)
 // 注入 Vercel 分析工具
 const injectAnalytics = () => {
   const script = document.createElement('script')
-  script.src = 'https://analytics.vercel.com/v1/script.js'
+  script.src = 'https://analytics.vercel.com/script.js' // 移除旧地址中的 v1 路径
   script.dataset.project = import.meta.env.VERCEL_PROJECT_ID || ''
   document.head.appendChild(script)
 }
@@ -49,6 +49,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
+/* 基础样式（保持与 Tailwind 兼容） */
 h2 {
   @apply text-lg;
 }
