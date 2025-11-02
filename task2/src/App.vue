@@ -2,20 +2,17 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { useMessageStore } from '@/stores/message'
 import { storeToRefs } from 'pinia'
-
-// 兼容写法：直接从主包导入（避免子路径解析问题）
-import { inject } from '@vercel/analytics'
-import { SpeedInsights } from '@vercel/speed-insights'
-
-// 注入分析工具（在组件挂载后执行）
-inject()
+// Vue 专用组件导入（使用明确兼容的路径）
+import Analytics from '@vercel/analytics/vue'
+import SpeedInsights from '@vercel/speed-insights/vue'
 
 const store = useMessageStore()
 const { message } = storeToRefs(store)
 </script>
 
 <template>
-  <!-- 速度分析组件 -->
+  <!-- 直接使用组件，无需手动注入 -->
+  <Analytics />
   <SpeedInsights />
   
   <div class="text-center font-sans text-gray-700 antialias">
