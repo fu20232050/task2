@@ -1,35 +1,20 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import { onMounted } from 'vue'
 import { useMessageStore } from '@/stores/message'
 import { storeToRefs } from 'pinia'
+// 导入 Vercel 官方 Vue 组件（确保版本兼容）
+import { Analytics } from '@vercel/analytics/vue'
+import { SpeedInsights } from '@vercel/speed-insights/vue'
 
 const store = useMessageStore()
 const { message } = storeToRefs(store)
-
-// 注入 Vercel Analytics
-const injectAnalytics = () => {
-  const script = document.createElement('script')
-  script.src = 'https://analytics.vercel.com/script.js'
-  script.dataset.project = 'prj_yaCaZ68eSEUvYr22Hs0DF9PvDRA3' // 填入你的项目ID
-  document.head.appendChild(script)
-}
-
-// 注入 Vercel Speed Insights
-const injectSpeedInsights = () => {
-  const script = document.createElement('script')
-  script.src = 'https://speed-insights.vercel.app/v1/speed-insights.js'
-  script.dataset.project = 'prj_yaCaZ68eSEUvYr22Hs0DF9PvDRA3' // 填入你的项目ID
-  document.head.appendChild(script)
-}
-
-onMounted(() => {
-  injectAnalytics()
-  injectSpeedInsights()
-})
 </script>
 
 <template>
+  <!-- 直接使用官方组件，自动处理项目关联和脚本加载 -->
+  <Analytics />
+  <SpeedInsights />
+  
   <div class="text-center font-sans text-gray-700 antialias">
     <header>
       <div id="flashMessage" class="animate-fade py-2 px-4 mb-4" v-if="message">
