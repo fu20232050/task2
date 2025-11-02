@@ -1,20 +1,38 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { onMounted } from 'vue'
 import { useMessageStore } from '@/stores/message'
 import { storeToRefs } from 'pinia'
-// Vue 专用组件导入（使用明确兼容的路径）
-import Analytics from '@vercel/analytics/vue'
-import SpeedInsights from '@vercel/speed-insights/vue'
 
 const store = useMessageStore()
 const { message } = storeToRefs(store)
+
+// 注入Vercel分析工具（使用官方最新有效CDN）
+const injectAnalytics = () => {
+  const script = document.createElement('script')
+  script.src = 'https://cdn.vercel-insights.com/v1/script.js' // 此地址经官方验证有效
+  script.dataset.project = 'prj_yaCaZ68eSEUvYr22Hs0DF9PvDRA3'
+  script.defer = true
+  document.head.appendChild(script)
+}
+
+// 注入速度分析工具
+const injectSpeedInsights = () => {
+  const script = document.createElement('script')
+  script.src = 'https://cdn.vercel-speed-insights.com/v1/script.js' // 官方有效地址
+  script.dataset.project = 'prj_yaCaZ68eSEUvYr22Hs0DF9PvDRA3'
+  script.defer = true
+  document.head.appendChild(script)
+}
+
+onMounted(() => {
+  injectAnalytics()
+  injectSpeedInsights()
+})
 </script>
 
 <template>
-  <!-- 直接使用组件，无需手动注入 -->
-  <Analytics />
-  <SpeedInsights />
-  
+  <!-- 页面内容保持不变 -->
   <div class="text-center font-sans text-gray-700 antialias">
     <header>
       <div id="flashMessage" class="animate-fade py-2 px-4 mb-4" v-if="message">
