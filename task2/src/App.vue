@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { onMounted } from 'vue'
 import { useMessageStore } from '@/stores/message'
@@ -20,6 +20,39 @@ const injectAnalytics = () => {
 const injectSpeedInsights = () => {
   const script = document.createElement('script')
   script.src = 'https://cdn.vercel-speed-insights.com/v1/script.js' // 官方有效地址
+  script.dataset.project = 'prj_yaCaZ68eSEUvYr22Hs0DF9PvDRA3'
+  script.defer = true
+  document.head.appendChild(script)
+}
+
+onMounted(() => {
+  injectAnalytics()
+  injectSpeedInsights()
+})
+</script> -->
+
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import { onMounted } from 'vue'
+import { useMessageStore } from '@/stores/message'
+import { storeToRefs } from 'pinia'
+
+const store = useMessageStore()
+const { message } = storeToRefs(store)
+
+// 注入 Vercel Analytics
+const injectAnalytics = () => {
+  const script = document.createElement('script')
+  script.src = 'https://cdn.vercel-insights.com/v1/script.js'
+  script.dataset.project = 'prj_yaCaZ68eSEUvYr22Hs0DF9PvDRA3'
+  script.defer = true
+  document.head.appendChild(script)
+}
+
+// 注入 Vercel Speed Insights（使用官方最新CDN地址）
+const injectSpeedInsights = () => {
+  const script = document.createElement('script')
+  script.src = 'https://cdn.vercel-speed-insights.com/v1/script.js'
   script.dataset.project = 'prj_yaCaZ68eSEUvYr22Hs0DF9PvDRA3'
   script.defer = true
   document.head.appendChild(script)
